@@ -1,0 +1,45 @@
+.loginContainer {
+  background-image: url("../images/background1.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.topContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.formContainer {
+  flex-direction: column;
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.logo {
+  width: 100%;
+}
+
+.loginForm {
+  align-items: center;
+  border-radius: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1em;
+}
+
+.login-register-text {
+  margin-top: 10px;
+  font-size: 90%;
+}
+
+.int-group {
+  width: 100%;
+}

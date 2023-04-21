@@ -1,0 +1,69 @@
+.page-title {
+  margin-inline: auto;
+}
+
+.top-container {
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid #e8e8e8;
+}
+
+.boarding-points-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
+  margin-inline: 0.1rem;
+}
+
+.button {
+  display: flex;
+  padding-inline: 1rem;
+  margin-inline: 0.1rem;
+}
+
+.button > div > button {
+  background: transparent;
+  font-size: 3.5vw;
+}
+
+.arrow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-container > .right-arrow {
+  display: flex;
+  opacity: 0.5;
+}
+
+.boarding-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.boarding-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1rem;
+  padding-inline: 1rem 2rem;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.5);
+  background: transparent;
+}
+
+.boarding-btn > div {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.boarding-address {
+  opacity: 0.8;
+}

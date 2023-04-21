@@ -1,0 +1,205 @@
+:root {
+  --blue-clr: rgb(23, 126, 229);
+}
+
+.main-container {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-container {
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid #e8e8e8;
+}
+
+.page-title {
+  margin-inline: auto;
+}
+
+.ticket-container {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.ticket-card {
+  width: 95%;
+  height: 15rem;
+  border: 1px solid rgb(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-inline: auto;
+  margin-block: 1rem;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  width: 35%;
+  border-bottom-left-radius: 10px;
+  height: 2rem;
+  background-color: var(--blue-clr);
+  right: 0;
+  top: 0;
+  padding-inline: 0.3rem;
+}
+
+.brand-icon {
+  display: flex;
+  font-size: 1.4rem;
+}
+
+.brand-text {
+  font-size: 8pt;
+  color: #fff;
+}
+
+.info-container {
+  margin-top: 1.2rem;
+}
+
+.company-details-wrapper {
+  font-size: 8pt;
+  display: flex;
+  flex-direction: column;
+}
+
+.bus-name {
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.time-container {
+  display: flex;
+}
+
+.time-container h4 {
+  padding-inline: 0.5rem;
+  font-weight: 600;
+  padding-block: 1rem;
+  margin: 0;
+}
+
+.time-line {
+  position: relative;
+  width: 9rem;
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+  width: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0, 0.3);
+}
+
+.l-dot,
+.l-line {
+  left: 0;
+}
+
+.r-dot,
+.r-line {
+  right: 0;
+}
+
+.hrs {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 1px solid rgb(0, 0, 0, 0.3);
+  height: max-content;
+  width: max-content;
+  padding-inline: 0.2rem;
+  font-size: 7pt;
+  color: rgb(0, 0, 0, 0.4);
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+  width: 3.4rem;
+  height: 1px;
+  background: rgb(0, 0, 0, 0.3);
+}
+
+.seat-container {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.seat {
+  position: relative;
+  background-color: rgb(0, 0, 0, 0.05);
+  border-radius: 3px;
+  padding: 0.1rem;
+  display: flex;
+  align-items: center;
+  padding: 0.3rem;
+}
+
+.seat-icon {
+  display: flex;
+}
+
+.seat-text {
+  font-size: 11px;
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+  width: 70%;
+  height: 2px;
+  background-color: var(--blue-clr) !important;
+  display: none;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.price-container > h2 {
+  margin: 0;
+}
+
+.price-container > span {
+  color: rgb(0, 0, 0, 0.5);
+}
+
+.bottom-container {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  width: 100%;
+  border-top: 1px solid rgb(0, 0, 0, 0.3);
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.view-btn {
+  width: 40%;
+  border-radius: 2px;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+}

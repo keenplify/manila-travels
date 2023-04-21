@@ -1,0 +1,138 @@
+.main-container {
+  height: 100%;
+  position: relative;
+}
+
+.top-container {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid #e8e8e8;
+}
+
+.back-btn {
+  font-size: 1.5rem;
+}
+
+.page-title {
+  margin-inline: auto;
+}
+
+.route-container {
+  display: flex;
+  padding: 1rem 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 2rem;
+  margin-inline: 0.1rem;
+  border-radius: 8px;
+}
+
+.route-container div {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.from,
+.to {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.to {
+  align-items: end !important;
+}
+
+span {
+  padding: 0;
+  margin: 0;
+  line-height: 1em;
+  white-space: nowrap;
+}
+
+.arrow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-container > .right-arrow {
+  display: flex;
+  opacity: 0.5;
+  font-size: 1.2em;
+}
+
+.middle-container {
+  display: flex;
+  flex-direction: column;
+  padding-block: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 1rem;
+  margin-inline: 0.1rem;
+  border-radius: 8px;
+}
+
+.middle-container__note {
+  font-size: 0.7em;
+  opacity: 0.7;
+  padding-inline: 1rem;
+}
+
+.middle-container > div {
+  display: flex;
+}
+
+.middle-container > div:first-of-type {
+  border-bottom: 1px solid black;
+}
+
+.middle-container > div > input {
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  flex: 1;
+  outline: 0;
+  border: 0;
+}
+
+.bot-container {
+  margin-top: 1rem;
+  padding-block: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-inline: 0.1rem;
+  border-radius: 8px;
+}
+
+.bot-container__note {
+  font-size: 0.7em;
+  opacity: 0.7;
+  padding-inline: 1rem;
+}
+
+.bot-container > div {
+  display: flex;
+  padding-inline: 1rem;
+}
+
+.bot-container > div input {
+  border: 0;
+  outline: 0;
+}
+
+.submit-btn {
+  display: flex;
+  width: max(90%, 10rem);
+  height: 3rem;
+  border-radius: 25px;
+  background: #95c8e3;
+  margin-inline: auto;
+  color: #fff;
+  font-size: 1.1em;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 2%;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+}

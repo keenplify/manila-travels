@@ -1,0 +1,49 @@
+.homeContainer {
+  background-image: url("../images/background.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.topContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.logo {
+  width: 100%;
+}
+.bottomContainer {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 2em;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.btn-tab1 {
+  font-weight: bolder;
+  width: 80%;
+}
+
+.btn-primary {
+  background-color: #17a6f5 !important;
+}
+.btn-secondary {
+  color: black !important;
+  background-color: #a5d8f7 !important;
+}

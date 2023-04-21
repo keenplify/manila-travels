@@ -1,0 +1,128 @@
+.page-title {
+  margin-inline: auto;
+}
+
+.top-container {
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid #e8e8e8;
+}
+
+.payment-method-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  padding-inline: 1rem;
+  margin-block: 1rem 1.5rem;
+}
+
+.payment-select {
+  display: flex;
+  height: 5rem;
+}
+
+.payment-select > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.bill-logo {
+  width: 15%;
+  color: rgb(91, 120, 250);
+  font-size: 7vw;
+}
+
+.payment-text {
+  width: 70%;
+  align-items: start !important;
+  font-size: 3.5vw;
+  line-height: 1.5em;
+}
+
+.payment-text > span:last-child {
+  font-size: 3vw !important;
+}
+
+.check-logo {
+  width: 15%;
+  color: rgb(91, 120, 250);
+  font-size: 5.5vw;
+}
+
+.proceed-button {
+  display: flex;
+  width: max(90%, 5rem);
+  height: 3rem;
+  border-radius: 25px;
+  background: rgb(91, 120, 250);
+  margin-inline: auto;
+  color: #fff;
+  font-size: 1.1em;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 2%;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+}
+
+.payment-modal-container {
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  background: rgb(0, 0, 0, 0.5);
+}
+
+.payment-modal {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 4.5vw;
+  width: min(95%, 40rem);
+  padding: 0.5rem;
+  height: max-content;
+  border-radius: 12px;
+  border: 1px solid rgb(0, 0, 0, 0.5);
+  background: #fff;
+}
+
+.payment-modal > span {
+  padding-block: 1rem;
+}
+
+.payment-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.payment-modal-buttons button {
+  padding-block: 4vw;
+  border-radius: 5px;
+  margin: 0.1rem;
+}
+
+.payment-modal-buttons button:first-child {
+  background-color: rgb(91, 120, 250);
+  color: #ffff;
+}
+
+.payment-modal-buttons button:last-child {
+  background-color: transparent;
+}
+
+.payment-modal > button {
+  padding-block: 1rem;
+  border-radius: 15px;
+  margin-top: auto;
+}
