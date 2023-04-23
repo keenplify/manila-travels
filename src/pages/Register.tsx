@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userAuthApi } from "../queries/v1/auth";
-import { useForm, FieldError } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import { LS_AUTHTOKEN } from "../config/localstorage";

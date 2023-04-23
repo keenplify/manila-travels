@@ -1,5 +1,6 @@
 :root {
   --main-clr: #329fd8;
+  --partial-clr: #f1f1f1;
 }
 
 .content-container {
@@ -121,6 +122,11 @@ span {
 .active {
   background-color: var(--main-clr);
   color: #fff !important;
+}
+
+.inactive {
+  background-color: var(--partial-clr);
+  color: black !important;
 }
 
 .search-btn {

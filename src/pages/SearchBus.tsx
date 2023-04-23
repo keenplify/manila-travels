@@ -4,24 +4,87 @@ import {
 } from "@ionic/react";
 import "./SearchBus.css";
 import { useHistory } from "react-router";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {
   paperPlaneSharp,
   locationSharp,
   swapVerticalSharp,
 } from "ionicons/icons";
-import { zodiosHooks } from "../config/zodios";
+import { logout, zodiosHooks } from "../config/zodios";
+import { Combobox } from '@headlessui/react'
+import { MdCheckCircleOutline } from "react-icons/md";
+import _ from 'lodash'
+import dayjs from 'dayjs'
+import { useRouteStore } from "../stores/route";
 
 const SearchBus: React.FC = () => {
 
   const { data:user } = zodiosHooks.useCheckCustomer()
+  const { data:routes } = zodiosHooks.useListRoutes()
+
+  const [fromValue, setFromValue] = useState('')
+  const [toValue, setToValue] = useState('')
+  const {selectedRoute, setSelectedRoute} = useRouteStore()
+
+  useEffect(() => {
+    setSelectedRoute(undefined)
+  }, [])
+
+  const {from, to} = useMemo(() => {
+    if (!routes) return {
+      from: [],
+      to: []
+    }
+    
+    const from: string[] = []
+    const to: string[] = []
+
+    for (const route of routes.data) {
+      if (!from.includes(route.from)) from.push(route.from)
+      if (!to.includes(route.to)) to.push(route.to)
+    }
+
+    return {from, to}
+  }, [routes])
+
   const history = useHistory();
 
   function handleHome() {
     history.push("/seatselection");
   }
+  
+  const filteredTo = useMemo(() => {
+    if (!routes) return []
 
+    if (from.map(v => v.toLocaleUpperCase()).includes(fromValue.toLocaleUpperCase())) {
+      return _.uniq(routes.data.filter((val) => val.from === fromValue).map(v => v.to))
+    }
+
+    return to
+  }, [from, fromValue, routes, to])
+
+  const filteredFrom = useMemo(() => {
+    if (!routes) return []
+
+    if (to.map(v => v.toLocaleUpperCase()).includes(toValue.toLocaleUpperCase())) {
+      return _.uniq(routes.data.filter((val) => val.to === toValue).map(v => v.from))
+    }
+
+    return from
+  }, [to, toValue, routes, from])
+
+  const filteredRoutes = useMemo(() => {
+    if (!routes) return []
+    return routes.data
+      .filter((val) => 
+        val.from.toLocaleUpperCase().trim() === fromValue.toLocaleUpperCase().trim() &&
+        val.to.toLocaleUpperCase().trim() === toValue.toLocaleUpperCase().trim()
+      )
+  }, [routes, fromValue, toValue])
+
+  const handleLogout = logout
+  
   return (
     <IonPage>
       <IonContent className="content-container">
@@ -34,22 +97,65 @@ const SearchBus: React.FC = () => {
         {
           user && (
             <div className="text-white m-2 text-xl">
-              Good day, <b className="uppercase">{user.data.fullName}</b>!
+              Good day, <b className="uppercase">{user.data.fullName}</b>! <button className="ml-2 underline" onClick={handleLogout}>Logout</button>
             </div>
           )
         }
-        
 
         <div className="card">
           <div className="place-container">
-            <div>
+            <div className="relative">
               <IonIcon icon={paperPlaneSharp} className="card-icon"></IonIcon>
-              <input type="text" placeholder="Destination" />
+              <Combobox value={fromValue} onChange={setFromValue}>
+                <Combobox.Input
+                  onChange={(event) => setFromValue(event.target.value)}
+                  placeholder="From"
+                />
+                <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
+                  {
+                    filteredFrom.map((location, key) => (
+                      <Combobox.Option
+                        key={key}
+                        value={location}
+                      >
+                        {({ selected }) => (
+                          <div className="flex gap-2 items-center px-2 py-2">
+                            {selected && <MdCheckCircleOutline />}
+                            {location}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    ))
+                  }
+                </Combobox.Options>
+              </Combobox>
             </div>
 
             <div>
               <IonIcon icon={locationSharp} className="card-icon"></IonIcon>
-              <input type="text" placeholder="Going to" />
+              <Combobox value={toValue} onChange={setToValue}>
+                <Combobox.Input
+                  onChange={(event) => setToValue(event.target.value)}
+                  placeholder="Going To"
+                />
+                <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
+                  {
+                    filteredTo.map((location, key) => (
+                      <Combobox.Option
+                        key={key}
+                        value={location}
+                      >
+                        {({ selected }) => (
+                          <div className="flex gap-2 items-center px-2 py-2">
+                            {selected && <MdCheckCircleOutline />}
+                            {location}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    ))
+                  }
+                </Combobox.Options>
+              </Combobox>
             </div>
 
             <IonIcon
@@ -60,42 +166,39 @@ const SearchBus: React.FC = () => {
 
           <span>Departure</span>
 
-          <div className="date-container">
-            <ul>
-              <li>
-                <a href="#" className="active">
-                  27
-                </a>
-                <span className="day">MON</span>
-              </li>
-              <li>
-                <a href="#">28</a>
-                <span className="day">TUE</span>
-              </li>
-              <li>
-                <a href="#">29</a>
-                <span className="day">WED</span>
-              </li>
-              <li>
-                <a href="#">30</a>
-                <span className="day">THU</span>
-              </li>
-              <li>
-                <a href="#">31</a>
-                <span className="day">FRI</span>
-              </li>
-            </ul>
+          <div className="p-2">
+            <div className="!grid grid-cols-5 sm:grid-cols-7 gap-4 w-full py-2">
+              {
+                filteredRoutes.length > 0 ? (
+                  filteredRoutes.map((route, key) => {
+                    const day = dayjs(route.departureDate)
+                    return (
+                      <button 
+                        key={key} 
+                        className='flex flex-col justify-center gap-2 items-center'
+                        onClick={() => selectedRoute?.id === route.id ? setSelectedRoute(undefined) : setSelectedRoute(route)}
+                      >
+                          <span className={`${route?.id === selectedRoute?.id ? 'active' : 'inactive'} rounded-full aspect-square w-8 h-8 p-1 flex justify-center items-center`}>
+                            {day.date()}
+                          </span>
+                          <span className="day">{day.format('ddd')}</span>
+                        </button>
+                    )
+                  })
+                ) : (
+                  <p className="flex justify-center w-full text-slate-500 text-sm col-span-full">No routes available</p>
+                )
+              }
+            </div>
           </div>
 
-          <button type="submit" className="search-btn" onClick={handleHome}>
-            Search
+          <button type="submit" className={`search-btn ${selectedRoute ? '' : '!bg-slate-300'}`} onClick={handleHome}>
+            Book
           </button>
         </div>
       </IonContent>
     </IonPage>
   );
-};
-{
 }
 
 export default SearchBus;
