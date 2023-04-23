@@ -1,31 +1,62 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./Register.css";
 import { useHistory } from "react-router";
-import SearchBus from "./SearchBus";
-import Home from "./Home";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userAuthApi } from "../queries/v1/auth";
+import { useForm, FieldError } from "react-hook-form";
+import { z } from "zod";
+import { toast } from "react-toastify";
+import { LS_AUTHTOKEN } from "../config/localstorage";
+import { zodiosHooks } from "../config/zodios";
+
+const registerSchema = userAuthApi[1].parameters[0].schema
 
 const Register: React.FC = () => {
-  const history = useHistory();
+  const { register, handleSubmit, formState: {
+    errors
+  } } = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema)
+  })
 
-  function handleHome() {
-    history.push("/searchbus");
-  }
+  const { mutate } = zodiosHooks.useRegisterUser(undefined, {
+    onSuccess: (res) => {
+      localStorage.setItem(LS_AUTHTOKEN, res.access.token)
+      toast.success('Logged in successfully')
+      push('/searchbus')
+    }
+    ,
+    onError: () => {
+      toast.error('Unable to register. Please try again.')
+    }
+  })
+  
+  const onSubmit = handleSubmit((value) => mutate(value), (error) => {
+    console.log('error', error)
+  })
+
+  const { push } = useHistory();
+
   return (
     <IonPage>
+      <Helmet style={[{
+        "cssText": `
+          body {
+            background: #349fd9 !important
+          }
+        `
+      }]} title="Register - Manila Travels"/>
       <IonContent fullscreen>
         <div className="loginContainer">
           <div className="formContainer">
             <img src="/logo.png" alt="logo" className="logo"></img>
-            <form action="" className="loginForm">
+            <form  className="loginForm" onSubmit={onSubmit}>
               <p
-                className="login-register-text"
+                className="login-register-text text-white"
                 style={{ fontSize: "2rem", fontWeight: "800" }}
               >
                 Register
@@ -34,43 +65,50 @@ const Register: React.FC = () => {
                 <input
                   type="fullname"
                   placeholder="Fullname"
-                  name="Fullname"
                   className="form-control w-100"
+                  {...register('fullName')}
                 ></input>
+                { errors?.fullName && <span className="text-danger">{errors.fullName.message}</span> }
               </div>
               <div className="int-group">
                 <input
                   type="email"
                   placeholder="Email"
-                  name="Email"
                   className="form-control w-100"
+                  {...register('username')}
                 ></input>
+                { errors?.username && <span className="text-danger font-bold uppercase">{errors.username.message}</span> }
               </div>
               <div className="int-group">
                 <input
                   type="password"
                   placeholder="Password"
-                  name="Password"
                   className="form-control w-100"
+                  {...register('password')}
                 ></input>
+                { errors?.password && <span className="text-danger">{errors.password.message}</span> }
+
               </div>
               <div className="int-group">
                 <input
-                  type="re-enter password"
+                  type="password"
                   placeholder="Re-enter Password"
-                  name="Re-enter Password"
                   className="form-control w-100"
+                  {...register('confirm')}
                 ></input>
+                { errors?.confirm && <span className="text-danger">{errors.confirm.message}</span> }
               </div>
               <div className="int-group">
                 <button
                   name="submit"
                   className="btn btn-primary w-100"
                   style={{ backgroundColor: "#0993B5 !important" }}
-                  onClick={handleHome}
                 >
                   Register
                 </button>
+                <p className="login-register-text">
+                  Already have an account? <Link to="/login" className="text-white">Login Here</Link>
+                </p>
               </div>
             </form>
           </div>

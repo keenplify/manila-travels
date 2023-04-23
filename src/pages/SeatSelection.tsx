@@ -1,21 +1,10 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./SeatSelection.css";
 import { useHistory } from "react-router";
 import React from "react";
-import { IonIcon } from "@ionic/react";
-import {
-  paperPlaneSharp,
-  locationSharp,
-  swapVerticalSharp,
-  arrowForward,
-} from "ionicons/icons";
 import { IconContext } from "react-icons";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";

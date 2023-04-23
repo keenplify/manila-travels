@@ -1,20 +1,12 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./AvailableBuses.css";
 
 import React from "react";
 import { IonIcon } from "@ionic/react";
 import {
-  paperPlaneSharp,
-  locationSharp,
-  swapVerticalSharp,
-  arrowForward,
   checkmarkDoneCircleSharp,
   womanSharp,
 } from "ionicons/icons";
@@ -256,8 +248,3 @@ const AvailableBuses: React.FC = () => {
 };
 
 export default AvailableBuses;
-{
-  /* <div>
-                
-              </div> */
-}

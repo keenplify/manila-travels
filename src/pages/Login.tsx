@@ -1,33 +1,57 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
-import { useHistory } from "react-router";
 import "./Login.css";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userAuthApi } from "../queries/v1/auth";
+import { z } from "zod";
+import { zodiosHooks } from "../config/zodios";
+import { toast } from "react-toastify";
+import { LS_AUTHTOKEN } from "../config/localstorage";
+import { Link, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+
+const loginSchema = userAuthApi[0].parameters[0].schema
 
 const Login: React.FC = () => {
-  const history = useHistory();
+  const { register, handleSubmit } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema)
+  })
 
-  function handleRegister() {
-    history.push("/register");
-  }
+  const { push } = useHistory()
 
-  function handleHome() {
-    history.push("/home");
-  }
+  const { mutate } = zodiosHooks.useLoginUser(undefined, {
+    onSuccess: (res) => {
+      localStorage.setItem(LS_AUTHTOKEN, res.access.token)
+      toast.success('Logged in successfully')
+      push('/searchbus')
+    }
+    ,
+    onError: () => {
+      toast.error('Unable to login. Please try again.')
+    }
+  })
+  
+  const onSubmit = handleSubmit((value) => mutate(value))
+
   return (
-    <IonPage>
+    <IonPage className="bg-main">
+      <Helmet style={[{
+        "cssText": `
+          body {
+            background: #349fd9 !important
+          }
+        `
+      }]} title="Login - Manila Travels"/>
       <IonContent fullscreen>
         <div className="loginContainer">
           <div className="formContainer">
             <img src="/logo.png" alt="logo" className="logo"></img>
-            <form action="" className="loginForm">
+            <form className="loginForm" onSubmit={onSubmit}>
               <p
-                className="login-register-text"
+                className="login-register-text text-white"
                 style={{ fontSize: "2rem", fontWeight: "800" }}
               >
                 Login
@@ -36,16 +60,16 @@ const Login: React.FC = () => {
                 <input
                   type="username"
                   placeholder="Username"
-                  name="Username"
                   className="form-control w-100"
+                  {...register('username')}
                 ></input>
               </div>
               <div className="int-group">
                 <input
                   type="password"
                   placeholder="Password"
-                  name="Password"
                   className="form-control w-100"
+                  {...register('password')}
                 ></input>
               </div>
               <div className="int-group">
@@ -53,12 +77,11 @@ const Login: React.FC = () => {
                   name="submit"
                   className="btn btn-primary w-100"
                   style={{ backgroundColor: "#191919 !important" }}
-                  onClick={handleHome}
                 >
                   Login
                 </button>
                 <p className="login-register-text">
-                  Don't have an account? <a href="/register">Register Here</a>.
+                  Don't have an account? <Link to="/register" className="text-white">Register Here</Link>
                 </p>
               </div>
             </form>

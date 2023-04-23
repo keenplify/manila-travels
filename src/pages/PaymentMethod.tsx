@@ -2,14 +2,8 @@ import React, { useState } from "react";
 
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonActionSheet,
-  IonButton,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./PaymentMethod.css";
 import { useHistory } from "react-router";
 import { IoIosArrowBack } from "react-icons/io";
@@ -19,7 +13,7 @@ const PaymentMethod: React.FC = () => {
   const [modalState, setModalState] = useState("none");
 
   function toggleModal() {
-    setModalState((prevState) => (prevState == "none" ? "flex" : "none"));
+    setModalState((prevState) => (prevState === "none" ? "flex" : "none"));
   }
 
   function hideModal() {

@@ -1,11 +1,7 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./SearchBus.css";
 import { useHistory } from "react-router";
 import React from "react";
@@ -15,21 +11,34 @@ import {
   locationSharp,
   swapVerticalSharp,
 } from "ionicons/icons";
+import { zodiosHooks } from "../config/zodios";
 
 const SearchBus: React.FC = () => {
+
+  const { data:user } = zodiosHooks.useCheckCustomer()
   const history = useHistory();
 
   function handleHome() {
     history.push("/seatselection");
   }
+
   return (
     <IonPage>
       <IonContent className="content-container">
-        <img src="/background1.png" className="background-image" />
+        <img src="/background1.png" className="background-image" alt="background" />
 
         <div className="logo-container">
-          <img src="/logo.png"></img>
+          <img src="/logo.png" alt="logo"></img>
         </div>
+
+        {
+          user && (
+            <div className="text-white m-2 text-xl">
+              Good day, <b className="uppercase">{user.data.fullName}</b>!
+            </div>
+          )
+        }
+        
 
         <div className="card">
           <div className="place-container">

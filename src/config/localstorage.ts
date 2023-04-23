@@ -1,0 +1,1 @@
+export const LS_AUTHTOKEN = 'manila_travels_auth_token' as const

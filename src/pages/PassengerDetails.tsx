@@ -1,20 +1,12 @@
 import React from "react";
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonInput,
   IonIcon,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
 import "./PassengerDetails.css";
 import { useHistory } from "react-router";
 import {
-  paperPlaneSharp,
-  locationSharp,
-  swapVerticalSharp,
   arrowForward,
 } from "ionicons/icons";
 
