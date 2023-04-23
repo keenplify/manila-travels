@@ -10,7 +10,7 @@ export const allAPIs = makeApi([
   ...routesApi
 ])
 
-export const zodios = new Zodios("http://localhost:3333", allAPIs)
+export const zodios = new Zodios("https://manila-travels-service.onrender.com/", allAPIs)
 
 export function logout() {
     localStorage.removeItem(LS_AUTHTOKEN)
