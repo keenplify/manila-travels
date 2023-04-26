@@ -4,23 +4,36 @@ import {
 } from "@ionic/react";
 import "./SeatSelection.css";
 import { useHistory } from "react-router";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { IconContext } from "react-icons";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import { CgArrowLongRight } from "react-icons/cg";
 import { GiSteeringWheel } from "react-icons/gi";
+import { useRouteStore } from "../stores/route";
+import dayjs from "dayjs";
+import ActionSheet, { ActionSheetRef } from "@keenplify/actionsheet-react"
+import { SeatButton } from "../components/SeatSelection/Seat";
 
 const SeatSelection: React.FC = () => {
   const history = useHistory();
+  const {selectedRoute} = useRouteStore()
+  const seatDetailsRef = useRef<ActionSheetRef>();
+
+  useEffect(() => {
+    if (!selectedRoute) history.push("/searchbus");
+  }, [selectedRoute, history])
 
   function handleRegister() {
     history.push("/boardingpoint");
   }
 
   function handleBack() {
-    history.push("/passengerdetails");
+    history.push("/searchbus");
   }
+
+  if (!selectedRoute) return null
+  
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -31,35 +44,29 @@ const SeatSelection: React.FC = () => {
             </span>
           </button>
 
-          <label className="page-title">
-            <strong>Manila to Zambales</strong>
+          <label className="page-title text-center">
+            <strong>{selectedRoute.from} to {selectedRoute.to}</strong>
             <br />
-            <span style={{ fontSize: "14px" }}>Monday, 27 Feb, 2023</span>
+            <span style={{ fontSize: "14px" }}>{dayjs(selectedRoute.departureDate).format("dddd, DD  MMM, YYYY")}</span>
           </label>
         </div>
 
         <div className="boarding-points-container">
           <div className="button">
-            <div>
-              <button>Seat Selection</button>
-            </div>
+            <div className="font-bold">Seat Selection</div>
             <div className="arrow-container">
               <CgArrowLongRight />
             </div>
-            <div>
-              <button>Boarding Point</button>
-            </div>
+            <div>Boarding Point</div>
             <div className="arrow-container">
               <CgArrowLongRight />
             </div>
-            <div>
-              <button>Dropping Point</button>
-            </div>
+            <div>Dropping Point</div>
           </div>
         </div>
 
         <div className="two-button-container">
-          <button className="flex-butt">
+          <button className="flex-butt" onClick={() => seatDetailsRef.current?.open()}>
             <MdAirlineSeatReclineNormal />
             View Seat Type
           </button>
@@ -77,30 +84,42 @@ const SeatSelection: React.FC = () => {
           <div className="seat-box">
             <div>
               <div className="seat-col">
-                <button style={{ backgroundColor: "#F6C25E" }}></button>
-                <button style={{ backgroundColor: "#D8D8D8" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
+                <SeatButton number={1} />
+                <SeatButton number={5} />
+                <SeatButton number={9} />
+                <SeatButton number={13} />
+                <SeatButton number={17} />
+                <SeatButton number={21} />
+                <SeatButton number={25} />
+              </div>
+              <div className="seat-col">
+                <SeatButton number={2} />
+                <SeatButton number={6} />
+                <SeatButton number={10} />
+                <SeatButton number={14} />
+                <SeatButton number={18} />
+                <SeatButton number={22} />
+                <SeatButton number={26} />
               </div>
             </div>
             <div>
               <div className="seat-col">
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#FFFFFF" }}></button>
-                <button style={{ backgroundColor: "#FFFFFF" }}></button>
-                <button style={{ backgroundColor: "#FFFFFF" }}></button>
+                <SeatButton number={3} />
+                <SeatButton number={7} />
+                <SeatButton number={11} />
+                <SeatButton number={15} />
+                <SeatButton number={19} />
+                <SeatButton number={23} />
+                <SeatButton number={27} />
               </div>
               <div className="seat-col">
-                <button style={{ backgroundColor: "#D8D8D8" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#93D8FF" }}></button>
-                <button style={{ backgroundColor: "#D8D8D8" }}></button>
-                <button style={{ backgroundColor: "#D8D8D8" }}></button>
+                <SeatButton number={4} />
+                <SeatButton number={8} />
+                <SeatButton number={12} />
+                <SeatButton number={16} />
+                <SeatButton number={20} />
+                <SeatButton number={24} />
+                <SeatButton number={28} />
               </div>
             </div>
           </div>
@@ -123,6 +142,31 @@ const SeatSelection: React.FC = () => {
             </span>
           </button>
         </div>
+        <ActionSheet ref={seatDetailsRef}>
+          <div className="flex flex-col p-8">
+            <h2 className="font-bold text-xl">Seat Types</h2>
+            <div className="grid grid-cols-3 mt-4">
+              <div className="flex items-center">
+                <div
+                  className="aspect-square w-8 h-8 border bg-white shadow mr-2 rounded"
+                />
+                Available
+              </div>
+              <div className="flex items-center">
+                <div
+                  className="aspect-square w-8 h-8 border bg-[#ffa800] shadow mr-2 rounded"
+                />
+                Selected
+              </div>
+              <div className="flex items-center">
+                <div
+                  className="aspect-square w-8 h-8 border bg-[#93d8ff] shadow mr-2 rounded"
+                />
+                Booked
+              </div>
+            </div>
+          </div>
+        </ActionSheet>
       </IonContent>
     </IonPage>
   );

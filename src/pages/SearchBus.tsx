@@ -3,7 +3,7 @@ import {
   IonPage,
 } from "@ionic/react";
 import "./SearchBus.css";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {
@@ -51,28 +51,38 @@ const SearchBus: React.FC = () => {
   const history = useHistory();
 
   function handleHome() {
-    history.push("/seatselection");
+    history.push({
+      pathname: "/seatselection",
+    });
   }
   
   const filteredTo = useMemo(() => {
     if (!routes) return []
 
+    let data
+
     if (from.map(v => v.toLocaleUpperCase()).includes(fromValue.toLocaleUpperCase())) {
-      return _.uniq(routes.data.filter((val) => val.from === fromValue).map(v => v.to))
+      data = _.uniq(routes.data.filter((val) => val.from === fromValue).map(v => v.to))
+    } else {
+      data = to
     }
 
-    return to
-  }, [from, fromValue, routes, to])
+    return data.filter(v => v.toLocaleUpperCase().includes(toValue.toLocaleUpperCase()))
+  }, [from, fromValue, routes, to, toValue])
 
   const filteredFrom = useMemo(() => {
     if (!routes) return []
 
+    let data
+
     if (to.map(v => v.toLocaleUpperCase()).includes(toValue.toLocaleUpperCase())) {
-      return _.uniq(routes.data.filter((val) => val.to === toValue).map(v => v.from))
+      data = _.uniq(routes.data.filter((val) => val.to === toValue).map(v => v.from))
+    } else {
+      data = from
     }
 
-    return from
-  }, [to, toValue, routes, from])
+    return data.filter(v => v.toLocaleUpperCase().includes(fromValue.toLocaleUpperCase()))
+  }, [to, toValue, routes, from, fromValue])
 
   const filteredRoutes = useMemo(() => {
     if (!routes) return []

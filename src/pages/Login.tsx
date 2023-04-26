@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { LS_AUTHTOKEN } from "../config/localstorage";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 
 const loginSchema = userAuthApi[0].parameters[0].schema
 
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   const { register, handleSubmit } = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema)
   })
+  const [ isSubmitting, setIsSubmitting ] = useState(false)
 
   const { push } = useHistory()
 
@@ -27,11 +29,12 @@ const Login: React.FC = () => {
       localStorage.setItem(LS_AUTHTOKEN, res.access.token)
       toast.success('Logged in successfully')
       push('/searchbus')
-    }
-    ,
+    },
+    onMutate: () => setIsSubmitting(true),
     onError: () => {
       toast.error('Unable to login. Please try again.')
-    }
+    },
+    onSettled: () => setIsSubmitting(false)
   })
   
   const onSubmit = handleSubmit((value) => mutate(value))
@@ -76,7 +79,8 @@ const Login: React.FC = () => {
                 <button
                   name="submit"
                   className="btn btn-primary w-100"
-                  style={{ backgroundColor: "#191919 !important" }}
+                  style={{ backgroundColor: isSubmitting ? "#191919 !important" : "#0a0a0a !important" }}
+                  disabled={isSubmitting}
                 >
                   Login
                 </button>
