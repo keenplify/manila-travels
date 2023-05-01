@@ -1,9 +1,5 @@
 import { Redirect, Route } from "react-router-dom";
-import {
-  IonApp,
-  IonRouterOutlet,
-  setupIonicReact,
-} from "@ionic/react";
+import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,7 +10,7 @@ import DroppingPoint from "./pages/DroppingPoint";
 import PaymentMethod from "./pages/PaymentMethod";
 import AvailableBuses from "./pages/AvailableBuses";
 import BoardingPoint from "./pages/BoardingPoint";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from "react-helmet-async";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -32,18 +28,20 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /* Theme variables */
 import "./theme/variables.css";
 
 import SearchBus from "./pages/SearchBus";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PassengersPage from "./pages/Passengers/Passengers";
+import AddPassengerPage from "./pages/Passengers/AddPassenger";
 
 setupIonicReact();
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const App: React.FC = () => (
   <HelmetProvider>
@@ -83,6 +81,12 @@ const App: React.FC = () => (
             </Route>
             <Route exact path="/passengerdetails">
               <PassengerDetails />
+            </Route>
+            <Route exact path="/passengers">
+              <PassengersPage />
+            </Route>
+            <Route exact path="/passengers/add">
+              <AddPassengerPage />
             </Route>
             <Route exact path="/">
               <Redirect to="/home" />

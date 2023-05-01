@@ -4,13 +4,19 @@ import { userAuthApi } from '../queries/v1/auth'
 import { LS_AUTHTOKEN } from './localstorage'
 import { routesApi } from '../queries/v1/routes'
 import { isAxiosError } from 'axios'
+import { customersAPI } from '../queries/v1/customers'
+import { passengersAPI } from '../queries/v1/passengers'
 
 export const allAPIs = makeApi([
   ...userAuthApi,
-  ...routesApi
+  ...routesApi,
+  ...customersAPI,
+  ...passengersAPI
 ])
 
-export const zodios = new Zodios("https://manila-travels-service.onrender.com/", allAPIs)
+export const backendServerUrl = "https://manila-travels-service.onrender.com" as const
+
+export const zodios = new Zodios(backendServerUrl, allAPIs)
 
 export function logout() {
     localStorage.removeItem(LS_AUTHTOKEN)

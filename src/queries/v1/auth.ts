@@ -50,7 +50,7 @@ export const userAuthApi = makeApi([
   {
     method: 'post',
     path: '/v1/users/auth/update',
-    alias: 'updateCustomer',
+    alias: 'updateUser',
     parameters: [
       {
         name: 'body',
@@ -65,7 +65,7 @@ export const userAuthApi = makeApi([
   {
     method: 'get',
     path: '/v1/users/auth/check',
-    alias: 'checkCustomer',
+    alias: 'checkUser',
     response: z.object({
       data: UserSchema
     })

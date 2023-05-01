@@ -3,17 +3,21 @@ import {
   IonPage,
 } from "@ionic/react";
 import "./Home.css";
-import { useHistory } from "react-router";
+import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { LS_AUTHTOKEN } from "../config/localstorage";
 
 const Home: React.FC = () => {
-  const history = useHistory();
+  const history = useHistory()
+  useEffect(() => {
+    const token = localStorage.getItem(LS_AUTHTOKEN)
 
-  function handleLogin() {
-    history.push("/login");
-  }
-  function handleRegister() {
-    history.push("/register");
-  }
+    if (token && token.length > 0) {
+      history.push('/searchbus')
+    }
+  }, [history])
+
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -23,18 +27,18 @@ const Home: React.FC = () => {
           </div>
           <div className="bottomContainer">
             <div className="btns">
-              <button
+              <Link
                 className="btn btn-primary btn-tab1"
-                onClick={handleLogin}
+                to="/login"
               >
                 Login
-              </button>
-              <button
+              </Link>
+              <Link
                 className="btn btn-secondary btn-tab1"
-                onClick={handleRegister}
+                to="/register"
               >
                 New to Manila Travels? Sign Up!
-              </button>
+              </Link>
             </div>
           </div>
         </div>
