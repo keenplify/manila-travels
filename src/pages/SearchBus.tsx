@@ -1,7 +1,7 @@
 import { IonButton, IonContent, IonPage } from "@ionic/react";
 import "./SearchBus.css";
 import { useHistory } from "react-router-dom";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {
   paperPlaneSharp,
@@ -22,7 +22,8 @@ const SearchBus: React.FC = () => {
 
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
-  const { selectedRoute, setSelectedRoute } = useRouteStore();
+  const { selectedRoute, setSelectedRoute, resetSelectedSeats } =
+    useRouteStore();
 
   useEffect(() => {
     setSelectedRoute(undefined);
@@ -49,6 +50,7 @@ const SearchBus: React.FC = () => {
   const history = useHistory();
 
   function handleHome() {
+    resetSelectedSeats();
     history.push({
       pathname: "/seatselection",
     });
@@ -112,6 +114,9 @@ const SearchBus: React.FC = () => {
     history.push("/passengers");
   };
 
+  const fromComboBtn = useRef<HTMLButtonElement>(null);
+  const toComboBtn = useRef<HTMLButtonElement>(null);
+
   return (
     <IonPage>
       <IonContent className="content-container">
@@ -142,7 +147,9 @@ const SearchBus: React.FC = () => {
                 <Combobox.Input
                   onChange={(event) => setFromValue(event.target.value)}
                   placeholder="From"
+                  onFocus={() => fromComboBtn.current?.click()}
                 />
+                <Combobox.Button className="hidden" ref={fromComboBtn} />
                 <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
                   {filteredFrom.map((location, key) => (
                     <Combobox.Option key={key} value={location}>
@@ -164,7 +171,9 @@ const SearchBus: React.FC = () => {
                 <Combobox.Input
                   onChange={(event) => setToValue(event.target.value)}
                   placeholder="Going To"
+                  onFocus={() => toComboBtn.current?.click()}
                 />
+                <Combobox.Button className="hidden" ref={toComboBtn} />
                 <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
                   {filteredTo.map((location, key) => (
                     <Combobox.Option key={key} value={location}>

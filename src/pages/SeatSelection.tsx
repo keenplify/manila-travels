@@ -1,7 +1,4 @@
-import {
-  IonContent,
-  IonPage,
-} from "@ionic/react";
+import { IonButton, IonContent, IonPage } from "@ionic/react";
 import "./SeatSelection.css";
 import { useHistory } from "react-router";
 import React, { useEffect, useRef } from "react";
@@ -12,28 +9,39 @@ import { CgArrowLongRight } from "react-icons/cg";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useRouteStore } from "../stores/route";
 import dayjs from "dayjs";
-import ActionSheet, { ActionSheetRef } from "@keenplify/actionsheet-react"
+import ActionSheet, { ActionSheetRef } from "@keenplify/actionsheet-react";
 import { SeatButton } from "../components/SeatSelection/Seat";
+import { Toast } from "@capacitor/toast";
 
 const SeatSelection: React.FC = () => {
   const history = useHistory();
-  const {selectedRoute} = useRouteStore()
+  const { selectedRoute, selectedSeats } = useRouteStore();
   const seatDetailsRef = useRef<ActionSheetRef>();
+  const cancellationPolicyRef = useRef<ActionSheetRef>();
 
   useEffect(() => {
     if (!selectedRoute) history.push("/searchbus");
-  }, [selectedRoute, history])
+  }, [selectedRoute, history]);
 
-  function handleRegister() {
-    history.push("/boardingpoint");
+  function handleNext() {
+    if (!selectedSeats || selectedSeats.length === 0) {
+      Toast.show({
+        text: "Unable to proceed. Please select a seat",
+      });
+      return;
+    }
+
+    history.push("/passengerdetails");
   }
 
   function handleBack() {
     history.push("/searchbus");
   }
 
-  if (!selectedRoute) return null
-  
+  if (!selectedRoute) return null;
+
+  const price = selectedRoute.stepCost * (selectedSeats?.length ?? 0);
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -45,9 +53,13 @@ const SeatSelection: React.FC = () => {
           </button>
 
           <label className="page-title text-center">
-            <strong>{selectedRoute.from} to {selectedRoute.to}</strong>
+            <strong>
+              {selectedRoute.from} to {selectedRoute.to}
+            </strong>
             <br />
-            <span style={{ fontSize: "14px" }}>{dayjs(selectedRoute.departureDate).format("dddd, DD  MMM, YYYY")}</span>
+            <span style={{ fontSize: "14px" }}>
+              {dayjs(selectedRoute.departureDate).format("dddd, DD  MMM, YYYY")}
+            </span>
           </label>
         </div>
 
@@ -66,11 +78,19 @@ const SeatSelection: React.FC = () => {
         </div>
 
         <div className="two-button-container">
-          <button className="flex-butt" onClick={() => seatDetailsRef.current?.open()}>
+          <button
+            className="flex-butt"
+            onClick={() => seatDetailsRef.current?.open()}
+          >
             <MdAirlineSeatReclineNormal />
             View Seat Type
           </button>
-          <button className="flex-butt">Cancellation Policy</button>
+          <button
+            className="flex-butt"
+            onClick={() => cancellationPolicyRef.current?.open()}
+          >
+            Cancellation Policy
+          </button>
         </div>
 
         <div className="select-seat-container">
@@ -127,17 +147,25 @@ const SeatSelection: React.FC = () => {
 
         <div className="bottom-buttons">
           <button>
-            <span>More Details</span>
+            <span className="seats-total">
+              {selectedSeats?.length ?? 0} Seat(s)
+            </span>
           </button>
           <button>
-            <span className="seats-total">1 Seat(s)</span>
-          </button>
-          <button>
-            <span className="price">P800</span>
+            <span className="price">P{price}</span>
             <span className="total-price">Total Price</span>
           </button>
-          <button>
-            <span className="proceed-btn" onClick={handleRegister}>
+          <button
+            onClick={handleNext}
+            disabled={!selectedSeats || selectedSeats?.length === 0}
+          >
+            <span
+              className={`proceed-btn ${
+                selectedSeats?.length === 0
+                  ? "bg-[#349eda]  opacity-40 disabled"
+                  : "bg-[#349eda]"
+              }`}
+            >
               PROCEED
             </span>
           </button>
@@ -145,27 +173,35 @@ const SeatSelection: React.FC = () => {
         <ActionSheet ref={seatDetailsRef}>
           <div className="flex flex-col p-8">
             <h2 className="font-bold text-xl">Seat Types</h2>
-            <div className="grid grid-cols-3 mt-4">
+            <div className="grid grid-cols-2 mt-4 gap-3">
               <div className="flex items-center">
-                <div
-                  className="aspect-square w-8 h-8 border bg-white shadow mr-2 rounded"
-                />
+                <div className="aspect-square w-8 h-8 border bg-white shadow mr-2 rounded" />
                 Available
               </div>
               <div className="flex items-center">
-                <div
-                  className="aspect-square w-8 h-8 border bg-[#ffa800] shadow mr-2 rounded"
-                />
+                <div className="aspect-square w-8 h-8 border bg-[#ffa800] shadow mr-2 rounded" />
                 Selected
               </div>
               <div className="flex items-center">
-                <div
-                  className="aspect-square w-8 h-8 border bg-[#93d8ff] shadow mr-2 rounded"
-                />
+                <div className="aspect-square w-8 h-8 border bg-[#93d8ff] shadow mr-2 rounded" />
                 Booked
               </div>
             </div>
           </div>
+        </ActionSheet>
+        <ActionSheet ref={cancellationPolicyRef}>
+          <div className="flex flex-col p-8">
+            <h2 className="font-bold text-xl">Cancellation Policy</h2>
+            <div className="flex flex-col gap-2">
+              <p>Lorem ipsum dolor amet</p>
+            </div>
+          </div>
+          <IonButton
+            color="medium"
+            onClick={() => cancellationPolicyRef.current?.close()}
+          >
+            Close
+          </IonButton>
         </ActionSheet>
       </IonContent>
     </IonPage>

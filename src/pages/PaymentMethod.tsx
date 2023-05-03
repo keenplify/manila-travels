@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  IonContent,
-  IonPage,
-} from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import "./PaymentMethod.css";
 import { useHistory } from "react-router";
 import { IoIosArrowBack } from "react-icons/io";
@@ -23,11 +20,11 @@ const PaymentMethod: React.FC = () => {
   const history = useHistory();
 
   function handleLogin() {
-    history.push("/login");
+    history.push("/paymentmethod/gcash");
   }
 
   function handleBack() {
-    history.push("/droppingpoint");
+    history.push("/passengerdetails");
   }
 
   return (
@@ -53,8 +50,9 @@ const PaymentMethod: React.FC = () => {
               <FaMoneyBill />
             </div>
             <div className="payment-text">
-              <span>Cash</span>
-              <span>Use Gcash</span>
+              <span>
+                Use <b>GCash</b>
+              </span>
             </div>
             <div className="check-logo">
               <AiFillCheckCircle />

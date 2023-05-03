@@ -46,6 +46,7 @@ const AddPassengerPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { mutate } = zodiosHooks.useStorePassenger(undefined, {
     onSuccess: () => {
+      refetch();
       Toast.show({
         text: "Passenger created.",
       });
@@ -54,6 +55,7 @@ const AddPassengerPage: React.FC = () => {
     },
   });
   const { type, validIdImageUrl } = watch();
+  const { refetch } = zodiosHooks.useListPassengers();
 
   const onSubmit = handleSubmit(async (data) => {
     setIsSubmitting(true);

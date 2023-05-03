@@ -6,12 +6,14 @@ import { routesApi } from '../queries/v1/routes'
 import { isAxiosError } from 'axios'
 import { customersAPI } from '../queries/v1/customers'
 import { passengersAPI } from '../queries/v1/passengers'
+import { bookingsAPI } from '../queries/v1/bookings'
 
 export const allAPIs = makeApi([
   ...userAuthApi,
   ...routesApi,
   ...customersAPI,
-  ...passengersAPI
+  ...passengersAPI,
+  ...bookingsAPI
 ])
 
 export const backendServerUrl = "https://manila-travels-service.onrender.com" as const

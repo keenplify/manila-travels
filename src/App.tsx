@@ -38,65 +38,71 @@ import SearchBus from "./pages/SearchBus";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PassengersPage from "./pages/Passengers/Passengers";
 import AddPassengerPage from "./pages/Passengers/AddPassenger";
+import GCashPaymentMethod from "./pages/PaymentMethods/GCash";
 
 setupIonicReact();
 
 const queryClient = new QueryClient();
 
-const App: React.FC = () => (
-  <HelmetProvider>
-    <IonApp>
-      <QueryClientProvider client={queryClient}>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route exact path="/droppingpoint">
-              <DroppingPoint />
-            </Route>
-            <Route exact path="/boardingpoint">
-              <BoardingPoint />
-            </Route>
-            <Route exact path="/searchbus">
-              <SearchBus />
-            </Route>
-            <Route exact path="/passengerdetails">
-              <SeatSelection />
-            </Route>
-            <Route exact path="/seatselection">
-              <SeatSelection />
-            </Route>
-            <Route exact path="/availablebuses">
-              <AvailableBuses />
-            </Route>
-            <Route exact path="/paymentmethod">
-              <PaymentMethod />
-            </Route>
-            <Route exact path="/passengerdetails">
-              <PassengerDetails />
-            </Route>
-            <Route exact path="/passengers">
-              <PassengersPage />
-            </Route>
-            <Route exact path="/passengers/add">
-              <AddPassengerPage />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-        <ToastContainer />
-      </QueryClientProvider>
-    </IonApp>
-  </HelmetProvider>
-);
+const App: React.FC = () => {
+  return (
+    <HelmetProvider>
+      <IonApp>
+        <QueryClientProvider client={queryClient}>
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route exact path="/droppingpoint">
+                <DroppingPoint />
+              </Route>
+              <Route exact path="/boardingpoint">
+                <BoardingPoint />
+              </Route>
+              <Route exact path="/searchbus">
+                <SearchBus />
+              </Route>
+              <Route exact path="/passengerdetails">
+                <SeatSelection />
+              </Route>
+              <Route exact path="/seatselection">
+                <SeatSelection />
+              </Route>
+              <Route exact path="/availablebuses">
+                <AvailableBuses />
+              </Route>
+              <Route exact path="/paymentmethod">
+                <PaymentMethod />
+              </Route>
+              <Route exact path="/paymentmethod/gcash">
+                <GCashPaymentMethod />
+              </Route>
+              <Route exact path="/passengerdetails">
+                <PassengerDetails />
+              </Route>
+              <Route exact path="/passengers">
+                <PassengersPage />
+              </Route>
+              <Route exact path="/passengers/add">
+                <AddPassengerPage />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+            </IonRouterOutlet>
+          </IonReactRouter>
+          <ToastContainer />
+        </QueryClientProvider>
+      </IonApp>
+    </HelmetProvider>
+  );
+};
 
 export default App;

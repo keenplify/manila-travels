@@ -3,7 +3,7 @@ import { BusSchema } from './bus'
 
 export const RouteSchema = z.object({
     id: z.number(),
-    routeId: z.number(),
+    routeId: z.string(),
     busNo: z.string(),
     location: z.string(),
     from: z.string(),

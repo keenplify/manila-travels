@@ -27,6 +27,15 @@
   border-radius: 8px;
 }
 
+.seat-container {
+  display: flex;
+  padding: 1rem 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 1rem;
+  margin-inline: 0.1rem;
+  border-radius: 8px;
+}
+
 .route-container div {
   flex: 1;
   padding: 0.5rem;
