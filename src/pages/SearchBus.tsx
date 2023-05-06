@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonMenuButton, IonPage } from "@ionic/react";
 import "./SearchBus.css";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -9,12 +9,13 @@ import {
   swapVerticalSharp,
   checkmarkDoneCircleOutline,
 } from "ionicons/icons";
-import { logout, zodiosHooks } from "../config/zodios";
+import { zodiosHooks } from "../config/zodios";
 import { Combobox } from "@headlessui/react";
 import { MdCheckCircleOutline } from "react-icons/md";
 import _ from "lodash";
 import dayjs from "dayjs";
 import { useRouteStore } from "../stores/route";
+import { SideMenu } from "../components/SideMenu";
 
 const SearchBus: React.FC = () => {
   const { data: user } = zodiosHooks.useCheckUser();
@@ -108,8 +109,6 @@ const SearchBus: React.FC = () => {
     );
   }, [routes, fromValue, toValue]);
 
-  const handleLogout = logout;
-
   const handleVerify = () => {
     history.push("/passengers");
   };
@@ -118,141 +117,142 @@ const SearchBus: React.FC = () => {
   const toComboBtn = useRef<HTMLButtonElement>(null);
 
   return (
-    <IonPage>
-      <IonContent className="content-container">
-        <img
-          src="/background1.png"
-          className="background-image"
-          alt="background"
-        />
+    <>
+      <SideMenu />
+      <IonPage id="main-content">
+        <IonContent className="content-container">
+          <img
+            src="/background1.png"
+            className="background-image"
+            alt="background"
+          />
 
-        <div className="logo-container">
-          <img src="/logo.png" alt="logo"></img>
-        </div>
+          <div className="logo-container flex justify-between items-center">
+            <img src="/logo.png" alt="logo"></img>
+            <IonMenuButton color="light" />
+          </div>
 
-        {user && (
-          <div className="text-white m-2 text-xl">
-            Good day, <b className="uppercase">{user.data.fullName}</b>!{" "}
-            <button className="ml-2 underline" onClick={handleLogout}>
-              Logout
+          {user && (
+            <div className="text-white m-2 text-xl">
+              Good day, <b className="uppercase">{user.data.fullName}</b>!
+            </div>
+          )}
+
+          <div className="card">
+            <div className="place-container">
+              <div className="relative">
+                <IonIcon icon={paperPlaneSharp} className="card-icon"></IonIcon>
+                <Combobox value={fromValue} onChange={setFromValue}>
+                  <Combobox.Input
+                    onChange={(event) => setFromValue(event.target.value)}
+                    placeholder="From"
+                    onFocus={() => fromComboBtn.current?.click()}
+                  />
+                  <Combobox.Button className="hidden" ref={fromComboBtn} />
+                  <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
+                    {filteredFrom.map((location, key) => (
+                      <Combobox.Option key={key} value={location}>
+                        {({ selected }) => (
+                          <div className="flex gap-2 items-center px-2 py-2">
+                            {selected && <MdCheckCircleOutline />}
+                            {location}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    ))}
+                  </Combobox.Options>
+                </Combobox>
+              </div>
+
+              <div>
+                <IonIcon icon={locationSharp} className="card-icon"></IonIcon>
+                <Combobox value={toValue} onChange={setToValue}>
+                  <Combobox.Input
+                    onChange={(event) => setToValue(event.target.value)}
+                    placeholder="Going To"
+                    onFocus={() => toComboBtn.current?.click()}
+                  />
+                  <Combobox.Button className="hidden" ref={toComboBtn} />
+                  <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
+                    {filteredTo.map((location, key) => (
+                      <Combobox.Option key={key} value={location}>
+                        {({ selected }) => (
+                          <div className="flex gap-2 items-center px-2 py-2">
+                            {selected && <MdCheckCircleOutline />}
+                            {location}
+                          </div>
+                        )}
+                      </Combobox.Option>
+                    ))}
+                  </Combobox.Options>
+                </Combobox>
+              </div>
+
+              <IonIcon
+                icon={swapVerticalSharp}
+                className="card-icon swap-vertical-icon"
+              ></IonIcon>
+            </div>
+
+            <span>Departure</span>
+
+            <div className="p-2">
+              <div className="!grid grid-cols-5 sm:grid-cols-7 gap-4 w-full py-2">
+                {filteredRoutes.length > 0 ? (
+                  filteredRoutes.map((route, key) => {
+                    const day = dayjs(route.departureDate);
+                    return (
+                      <button
+                        key={key}
+                        className="flex flex-col justify-center gap-2 items-center"
+                        onClick={() =>
+                          selectedRoute?.id === route.id
+                            ? setSelectedRoute(undefined)
+                            : setSelectedRoute(route)
+                        }
+                      >
+                        <span
+                          className={`${
+                            route?.id === selectedRoute?.id
+                              ? "active"
+                              : "inactive"
+                          } rounded-full aspect-square w-8 h-8 p-1 flex justify-center items-center`}
+                        >
+                          {day.date()}
+                        </span>
+                        <span className="day">{day.format("ddd")}</span>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <p className="flex justify-center w-full text-slate-500 text-sm col-span-full">
+                    No routes available
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className={`search-btn ${selectedRoute ? "" : "!bg-slate-300"}`}
+              onClick={handleHome}
+            >
+              Book
             </button>
           </div>
-        )}
-
-        <div className="card">
-          <div className="place-container">
-            <div className="relative">
-              <IonIcon icon={paperPlaneSharp} className="card-icon"></IonIcon>
-              <Combobox value={fromValue} onChange={setFromValue}>
-                <Combobox.Input
-                  onChange={(event) => setFromValue(event.target.value)}
-                  placeholder="From"
-                  onFocus={() => fromComboBtn.current?.click()}
-                />
-                <Combobox.Button className="hidden" ref={fromComboBtn} />
-                <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
-                  {filteredFrom.map((location, key) => (
-                    <Combobox.Option key={key} value={location}>
-                      {({ selected }) => (
-                        <div className="flex gap-2 items-center px-2 py-2">
-                          {selected && <MdCheckCircleOutline />}
-                          {location}
-                        </div>
-                      )}
-                    </Combobox.Option>
-                  ))}
-                </Combobox.Options>
-              </Combobox>
-            </div>
-
-            <div>
-              <IonIcon icon={locationSharp} className="card-icon"></IonIcon>
-              <Combobox value={toValue} onChange={setToValue}>
-                <Combobox.Input
-                  onChange={(event) => setToValue(event.target.value)}
-                  placeholder="Going To"
-                  onFocus={() => toComboBtn.current?.click()}
-                />
-                <Combobox.Button className="hidden" ref={toComboBtn} />
-                <Combobox.Options className="absolute top-[100%] z-50 w-full bg-white rounded border-1 border-slate-500 shadow">
-                  {filteredTo.map((location, key) => (
-                    <Combobox.Option key={key} value={location}>
-                      {({ selected }) => (
-                        <div className="flex gap-2 items-center px-2 py-2">
-                          {selected && <MdCheckCircleOutline />}
-                          {location}
-                        </div>
-                      )}
-                    </Combobox.Option>
-                  ))}
-                </Combobox.Options>
-              </Combobox>
-            </div>
-
-            <IonIcon
-              icon={swapVerticalSharp}
-              className="card-icon swap-vertical-icon"
-            ></IonIcon>
+          <div className="mt-8">
+            <IonButton size="large" className="text-sm" onClick={handleVerify}>
+              <IonIcon
+                slot="start"
+                icon={checkmarkDoneCircleOutline}
+                size="large"
+              />
+              Verify your remaining <br /> client(s) here
+            </IonButton>
           </div>
-
-          <span>Departure</span>
-
-          <div className="p-2">
-            <div className="!grid grid-cols-5 sm:grid-cols-7 gap-4 w-full py-2">
-              {filteredRoutes.length > 0 ? (
-                filteredRoutes.map((route, key) => {
-                  const day = dayjs(route.departureDate);
-                  return (
-                    <button
-                      key={key}
-                      className="flex flex-col justify-center gap-2 items-center"
-                      onClick={() =>
-                        selectedRoute?.id === route.id
-                          ? setSelectedRoute(undefined)
-                          : setSelectedRoute(route)
-                      }
-                    >
-                      <span
-                        className={`${
-                          route?.id === selectedRoute?.id
-                            ? "active"
-                            : "inactive"
-                        } rounded-full aspect-square w-8 h-8 p-1 flex justify-center items-center`}
-                      >
-                        {day.date()}
-                      </span>
-                      <span className="day">{day.format("ddd")}</span>
-                    </button>
-                  );
-                })
-              ) : (
-                <p className="flex justify-center w-full text-slate-500 text-sm col-span-full">
-                  No routes available
-                </p>
-              )}
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className={`search-btn ${selectedRoute ? "" : "!bg-slate-300"}`}
-            onClick={handleHome}
-          >
-            Book
-          </button>
-        </div>
-        <div className="mt-8">
-          <IonButton size="large" className="text-sm" onClick={handleVerify}>
-            <IonIcon
-              slot="start"
-              icon={checkmarkDoneCircleOutline}
-              size="large"
-            />
-            Verify your remaining <br /> client(s) here
-          </IonButton>
-        </div>
-      </IonContent>
-    </IonPage>
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

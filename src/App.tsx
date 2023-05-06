@@ -39,6 +39,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PassengersPage from "./pages/Passengers/Passengers";
 import AddPassengerPage from "./pages/Passengers/AddPassenger";
 import GCashPaymentMethod from "./pages/PaymentMethods/GCash";
+import BookingsPage from "./pages/Bookings/Bookings";
 
 setupIonicReact();
 
@@ -92,6 +93,9 @@ const App: React.FC = () => {
               </Route>
               <Route exact path="/passengers/add">
                 <AddPassengerPage />
+              </Route>
+              <Route exact path="/bookings">
+                <BookingsPage />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />

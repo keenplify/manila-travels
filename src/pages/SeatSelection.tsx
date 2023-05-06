@@ -193,7 +193,45 @@ const SeatSelection: React.FC = () => {
           <div className="flex flex-col p-8">
             <h2 className="font-bold text-xl">Cancellation Policy</h2>
             <div className="flex flex-col gap-2">
-              <p>Lorem ipsum dolor amet</p>
+              <div>
+                <p className="font-bold">Notice required for cancellation</p>
+                <p>
+                  You can cancel by clicking on the "Cancel Ticket" by logging
+                  in to the Manila Travels app and finding the ticket under "My
+                  Passes ", where you'll have the option to cancel up to 3 days
+                  only after the reservation and your payment is not redundable.
+                </p>
+                <p className="font-bold">Retroactive cancellations</p>
+                <p>
+                  Manila Travels cannot provide a refund or cancellation after
+                  the bus' scheduled departure time. It is the passenger's
+                  responsibility to be at the stop at least 15 minutes prior to
+                  departure. Manila Travels cannot guarantee that you can be
+                  accommodated on a later departure.
+                </p>
+                <p className="font-bold mt-4">
+                  CANCELATION INSTRUCTIONS FOR OURBUS INTERCITY &amp; COMMUTER
+                </p>
+                <p>
+                  If you booked through the Manila Travels app, you can cancel
+                  your ticket up to 3 days after the reservation
+                </p>
+                <ol className="list-decimal list-inside ml-4">
+                  <li>
+                    You can click on Cancel Ticket from your emailed ticket OR
+                  </li>
+                  <li>
+                    Log in to the Manila Travels app. If you don't remember your
+                    login information or signed up as a guest, use "forget
+                    password" to reset.
+                  </li>
+                  <li>Go to "My Account" on the menu, then "My Passes".</li>
+                  <li>
+                    Under upcoming, select the ticket you wish to cancel, then
+                    select "cancel".
+                  </li>
+                </ol>
+              </div>
             </div>
           </div>
           <IonButton

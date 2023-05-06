@@ -20,10 +20,11 @@ import { OverlayEventDetail } from "@ionic/core";
 import { useRouteStore } from "../../stores/route";
 import { Toast } from "@capacitor/toast";
 import currency from "currency.js";
-import { zodios } from "../../config/zodios";
+import { zodios, zodiosHooks } from "../../config/zodios";
 
 const GCashPaymentMethod: React.FC = () => {
   const history = useHistory();
+  const { refetch } = zodiosHooks.useListBookings();
   const modal = useRef<HTMLIonModalElement>(null);
   const input = useRef<HTMLIonInputElement>(null);
 
@@ -64,13 +65,15 @@ const GCashPaymentMethod: React.FC = () => {
         routeId: selectedRoute.routeId,
         referenceNo,
       });
+
+      setTimeout(() => {
+        refetch();
+        history.replace("/bookings");
+        Toast.show({
+          text: "Successfully created bookings.",
+        });
+      }, 1000);
     }
-
-    Toast.show({
-      text: "Successfully created bookings.",
-    });
-
-    window.location.href = "/";
   }
 
   function onWillDismiss(ev: CustomEvent<OverlayEventDetail>) {

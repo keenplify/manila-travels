@@ -5,7 +5,7 @@ import { UserSchema } from './user'
 
 export const BookingSchema = z.object({
     id: z.number(),
-   bookingId: z.number(),
+   bookingId: z.string(),
    customerId: z.string(),
    customer: CustomerSchema.optional(),
 
@@ -17,10 +17,11 @@ export const BookingSchema = z.object({
    bookedAmount: z.number(),
 
    bookedSeat: z.string(),
+   created: z.string(),
 
    referenceNo: z.string().nullable().optional(),
    
-   userId: z.string().nullable().optional(),
+   userId: z.number().nullable().optional(),
 
    user: UserSchema.optional(),
    

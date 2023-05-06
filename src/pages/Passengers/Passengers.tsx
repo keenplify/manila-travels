@@ -8,6 +8,7 @@ import {
   IonFabButton,
   IonIcon,
   IonItem,
+  IonLabel,
   IonList,
   IonPage,
   IonSpinner,
@@ -84,6 +85,11 @@ const PassengersPage: React.FC = () => {
                     </IonItem>
                   ))}
                 </IonList>
+              )}
+              {passengers?.data.length === 0 && (
+                <IonItem>
+                  <IonLabel>No passengers found.</IonLabel>
+                </IonItem>
               )}
             </IonCardContent>
           </IonCard>

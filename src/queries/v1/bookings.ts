@@ -33,5 +33,11 @@ export const bookingsAPI = makeApi([
     response: z.object({
       data: BookingSchema
     })
+  },
+  {
+    method: 'delete',
+    path: '/v1/users/bookings/:id',
+    alias: 'deleteBooking',
+    response: z.any()
   }
 ])
