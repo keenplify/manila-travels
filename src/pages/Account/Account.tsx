@@ -15,8 +15,8 @@ import { userAuthApi } from "../../queries/v1/auth";
 import { LS_AUTHTOKEN } from "../../config/localstorage";
 
 const updateSchema = userAuthApi[4].parameters[0].schema.merge(z.object({
-  confirmPassword: z.string()
-})).refine((data) => (!data.password) || !(data.password && data.password.length > 0) || data.password === data.confirmPassword, {
+  confirmPassword: z.string().optional()
+})).refine((data) => ((data.password ?? '').length === 0) || data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
@@ -61,9 +61,11 @@ const AccountPage: React.FC = () => {
   const onSubmit = handleSubmit((value) => mutate({
     fullName: value.fullName,
     // password: value.password?.length > 0 &&
-  }), (err) => {
-    console.log(err)
+  }), (err, vals) => {
+    console.log(err, vals)
   })
+
+  console.log(watch())
 
   const { password } = watch()
 
