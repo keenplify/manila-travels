@@ -40,6 +40,7 @@ import PassengersPage from "./pages/Passengers/Passengers";
 import AddPassengerPage from "./pages/Passengers/AddPassenger";
 import GCashPaymentMethod from "./pages/PaymentMethods/GCash";
 import BookingsPage from "./pages/Bookings/Bookings";
+import AccountPage from "./pages/Account/Account";
 
 setupIonicReact();
 
@@ -60,6 +61,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/register">
                 <Register />
+              </Route>
+              <Route exact path="/account">
+                <AccountPage />
               </Route>
               <Route exact path="/droppingpoint">
                 <DroppingPoint />

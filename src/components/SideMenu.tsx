@@ -42,7 +42,7 @@ export function SideMenu() {
           <IonListHeader>
             <IonTitle>Menu</IonTitle>
           </IonListHeader>
-          <IonItem>
+          <IonItem onClick={() => history.push("/account")}>
             <IonLabel>Account</IonLabel>
           </IonItem>
           <IonItem onClick={() => history.push("/bookings")}>

@@ -48,21 +48,6 @@ export const userAuthApi = makeApi([
     })
   },
   {
-    method: 'post',
-    path: '/v1/users/auth/update',
-    alias: 'updateUser',
-    parameters: [
-      {
-        name: 'body',
-        type: 'Body',
-        schema: UserSchema.partial()
-      }
-    ],
-    response: z.object({
-      data: UserSchema
-    })
-  },
-  {
     method: 'get',
     path: '/v1/users/auth/check',
     alias: 'checkUser',
@@ -75,5 +60,23 @@ export const userAuthApi = makeApi([
     path: '/v1/user/auth/logout',
     alias: 'logoutUser',
     response: z.string().optional()
+  },
+  {
+    method: 'put',
+    path: '/v1/users/users/:id',
+    alias: 'updateUser',
+    parameters: [
+      {
+        name: 'body',
+        type: 'Body',
+        schema: UserSchema.pick({
+          password: true,
+          fullName: true
+        })
+      }
+    ],
+    response: z.object({
+      data: UserSchema
+    })
   }
 ])

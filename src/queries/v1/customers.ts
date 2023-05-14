@@ -11,12 +11,4 @@ export const customersAPI = makeApi([
       data: z.array(CustomerSchema)
     })
   },
-  // {
-  //   method: 'post',
-  //   path: '/v1/users/customers',
-  //   alias: 'storeCustomer',
-  //   response: z.object({
-
-  //   })
-  // }
 ])

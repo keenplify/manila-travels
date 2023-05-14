@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonMenuButton, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonMenuButton, IonMenuToggle, IonPage } from "@ionic/react";
 import "./SearchBus.css";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -8,6 +8,7 @@ import {
   locationSharp,
   swapVerticalSharp,
   checkmarkDoneCircleOutline,
+  menu,
 } from "ionicons/icons";
 import { zodiosHooks } from "../config/zodios";
 import { Combobox } from "@headlessui/react";
@@ -129,7 +130,11 @@ const SearchBus: React.FC = () => {
 
           <div className="logo-container flex justify-between items-center">
             <img src="/logo.png" alt="logo"></img>
-            <IonMenuButton color="light" />
+            <IonMenuToggle>
+              <IonButton fill="clear" color="dark">
+                <IonIcon icon={menu} size="large"/>
+              </IonButton>
+            </IonMenuToggle>
           </div>
 
           {user && (
