@@ -16,7 +16,7 @@ import { LS_AUTHTOKEN } from "../../config/localstorage";
 
 const updateSchema = userAuthApi[4].parameters[0].schema.merge(z.object({
   confirmPassword: z.string()
-})).refine((data) => !(data.password && data.password.length > 0) || data.password === data.confirmPassword, {
+})).refine((data) => (!data.password) || !(data.password && data.password.length > 0) || data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
