@@ -48,7 +48,7 @@ export function SideMenu() {
           <IonItem onClick={() => history.push("/bookings")}>
             <IonLabel>My Bookings</IonLabel>
           </IonItem>
-          <IonItem>
+          <IonItem onClick={() => history.push("/passengers")}>
             <IonLabel>Passenger Verification</IonLabel>
           </IonItem>
           <IonItem onClick={logout}>
