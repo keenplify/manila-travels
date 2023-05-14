@@ -22,7 +22,7 @@ import { ActionSheet, ActionSheetButtonStyle } from "@capacitor/action-sheet";
 import { Toast } from "@capacitor/toast";
 
 const BookingsPage: React.FC = () => {
-  const { data: bookings, isLoading } = zodiosHooks.useListBookings();
+  const { data: bookings, refetch } = zodiosHooks.useListBookings();
   const [presentAlert] = useIonAlert();
 
   const history = useHistory();
@@ -86,6 +86,7 @@ const BookingsPage: React.FC = () => {
                                   id: booking.id,
                                 },
                               });
+                              refetch()
 
                               Toast.show({
                                 text: "Booking successfully cancelled.",
